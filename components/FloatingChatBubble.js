@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import icon library
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 
 const FloatingChatBubble = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -9,7 +10,7 @@ const FloatingChatBubble = () => {
     return (
         <Animated.View style={styles.bubble}>
             <TouchableOpacity style={styles.bubbleContent} onPress={() => setShowMenu(!showMenu)}>
-                <Icon name="chatbubble-ellipses" size={28} color="#fff" />
+                <FontAwesomeIcon name="comments" size={28} color="#fff" />
             </TouchableOpacity>
             {showMenu && (
                 <View style={styles.menu}>
