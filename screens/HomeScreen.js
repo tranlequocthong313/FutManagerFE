@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const HomeScreen = () => {
+function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home Screen</Text>
+    <View style={styles}>
+      <Text>Home!</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

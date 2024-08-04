@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const SettingsScreen = () => {
+function NotificationsScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Settings Screen</Text>
+    <View style={styles}>
+      <Text>Notifications!</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export default NotificationsScreen;

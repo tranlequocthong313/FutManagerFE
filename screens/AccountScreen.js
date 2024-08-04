@@ -1,54 +1,63 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-// Import the local avatar image;
+// Import the local avatar image and background image
+const backgroundImage = { uri: 'https://placekitten.com/600/300' }; // Replace with your background image source
 
-const ProfileScreen = () => {
+const AccountScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        {/* <Image source={} style={styles.avatar} /> */}
-        <Text style={styles.userName}>USER NAME</Text>
-      </View>
+    <View style={styles.headerContent}>
+      <Text style={styles.userName}>USER NAME</Text>
+    </View>
       <View style={styles.menu}>
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="phone" size={20} color="#fff" />
           <Text style={styles.menuText}>Phone number</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="map-marker" size={20} color="#fff" />
           <Text style={styles.menuText}>Địa chỉ</Text>
         </TouchableOpacity>
+
+        <View style={styles.divider} />
+
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="line-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê doanh thu</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="bar-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="pie-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê tình trạng sân</Text>
         </TouchableOpacity>
+
+        <View style={styles.divider} />
+
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="question-circle" size={20} color="#fff" />
           <Text style={styles.menuText}>Trợ giúp</Text>
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="info-circle" size={20} color="#fff" />
           <Text style={styles.menuText}>Giới thiệu</Text>
         </TouchableOpacity>
+
+        <View style={styles.divider} />
+
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="sign-out" size={20} color="red" />
           <Text style={[styles.menuText, { color: 'red' }]}>Đăng xuất</Text>
         </TouchableOpacity>
       </View>
-      
-      <TouchableOpacity style={styles.chatboxIcon}>
-        <Icon name="comments" size={30} color="#fff" />
-      </TouchableOpacity>
     </View>
   );
 };
@@ -58,18 +67,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#2ecc71',
   },
-  header: {
+  headerBackground: {
+    width: '100%',
+    height: 200, // Adjust the height as needed
+    justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20,
   },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 10,
+  headerContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40, // To push the content below the status bar
+    marginBottom: 10, // To push the content below the status bar
   },
   userName: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#fff',
     fontWeight: 'bold',
   },
@@ -87,26 +98,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
   },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    borderTopWidth: 1,
-    borderTopColor: '#fff',
-  },
-  chatboxIcon: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: '#2ecc71',
-    padding: 10,
-    borderRadius: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+  divider: {
+    borderBottomColor: '#fff',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginVertical: 10,
   },
 });
 
-export default ProfileScreen;
+export default AccountScreen;
