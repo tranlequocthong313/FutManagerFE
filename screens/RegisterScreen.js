@@ -1,55 +1,191 @@
-import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-// import loginBackground from '../asset/Loginbackground'
+import React, { useState } from 'react';
+import { View, Text, ImageBackground, StyleSheet } from 'react-native';
+import CustomInput from '../components/CustomInput';  // Sửa lại đường dẫn
+import CustomButton from '../components/CustomButton';  // Sửa lại đường dẫn
+import { useNavigation } from '@react-navigation/native';
 
 const RegisterScreen = () => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showClearPhoneNumberIcon, setShowClearPhoneNumberIcon] = useState(false);
+  const [showClearEmailIcon, setShowClearEmailIcon] = useState(false);
+  const [showClearFullNameIcon, setShowClearFullNameIcon] = useState(false);
+  const [showPasswordVisibilityIcon, setShowPasswordVisibilityIcon] = useState(false);
+  const [showConfirmPasswordVisibilityIcon, setShowConfirmPasswordVisibilityIcon] = useState(false);
+  const [hideVisibilityPassword, setHidePasswordVisibility] = useState(true);
+  const [hideVisibilityConfirmPassword, setHideConfirmPasswordVisibility] = useState(true);
+  const navigation = useNavigation(); 
+
+  const onChangePhoneNumber = (text) => {
+    setPhoneNumber(text);
+    setShowClearPhoneNumberIcon(text !== '');
+  };
+
+  const onChangeEmail = (text) => {
+    setEmail(text);
+    setShowClearEmailIcon(text !== '');
+  };
+
+  const onChangeFullName = (text) => {
+    setFullName(text);
+    setShowClearFullNameIcon(text !== '');
+  };
+
+  const onChangePassword = (text) => {
+    setPassword(text);
+    setShowPasswordVisibilityIcon(text !== '');
+  };
+
+  const onChangeConfirmPassword = (text) => {
+    setConfirmPassword(text);
+    setShowConfirmPasswordVisibilityIcon(text !== '');
+  };
+
+  const onClickClearPhoneNumberIcon = () => {
+    setShowClearPhoneNumberIcon(false);
+    setPhoneNumber('');
+  };
+
+  const onClickClearEmailIcon = () => {
+    setShowClearEmailIcon(false);
+    setEmail('');
+  };
+
+  const onClickClearFullNameIcon = () => {
+    setShowClearFullNameIcon(false);
+    setFullName('');
+  };
+
+  const onClickPasswordVisibilityIcon = () => {
+    setHidePasswordVisibility(prev => !prev);
+  };
+
+  const onClickConfirmPasswordVisibilityIcon = () => {
+    setHideConfirmPasswordVisibility(prev => !prev);
+  };
+
   return (
     <ImageBackground
-      // source={loginBackground} // Đặt link ảnh nền
+      source={require('../asset/Loginbackground.jpg')} // Sửa lại đường dẫn
       style={styles.background}
     >
-      <View style={styles.container}>
-        <Text style={styles.title}>Đăng Ký</Text>
+      <View style={styles.overlay}>
+        <Text style={styles.title}>Đăng ký</Text>
+
+        <View style={styles.inputs}>
+        <CustomInput
+            label="Tên đầy đủ"
+            value={fullName}
+            onChangeText={onChangeFullName}
+            icon="clear"
+            styleIcon={{ backgroundColor: "#000", color: "#fff", borderRadius: 50 }}
+            size={18}
+            showIcon={showClearFullNameIcon}
+            onClickIcon={onClickClearFullNameIcon}
+          />
+            <CustomInput
+            label="Email"
+            value={email}
+            onChangeText={onChangeEmail}
+            icon="clear"
+            styleIcon={{ backgroundColor: "#000", color: "#fff", borderRadius: 50 }}
+            size={18}
+            showIcon={showClearEmailIcon}
+            onClickIcon={onClickClearEmailIcon}
+          />
+          <CustomInput
+            label="Số điện thoại"
+            value={phoneNumber}
+            onChangeText={onChangePhoneNumber}
+            icon="clear"
+            styleIcon={{ backgroundColor: "#000", color: "#fff", borderRadius: 50 }}
+            size={18}
+            showIcon={showClearPhoneNumberIcon}
+            onClickIcon={onClickClearPhoneNumberIcon}
+          />
         
+      
+          <CustomInput
+            label="Mật khẩu"
+            value={password}
+            onChangeText={onChangePassword}
+            secureTextEntry={hideVisibilityPassword}
+            icon={hideVisibilityPassword ? "visibility-off" : "visibility"}
+            size={24}
+            showIcon={showPasswordVisibilityIcon}
+            onClickIcon={onClickPasswordVisibilityIcon}
+          />
+          <CustomInput
+            label="Nhập lại mật khẩu"
+            value={confirmPassword}
+            onChangeText={onChangeConfirmPassword}
+            secureTextEntry={hideVisibilityConfirmPassword}
+            icon={hideVisibilityConfirmPassword ? "visibility-off" : "visibility"}
+            size={24}
+            showIcon={showConfirmPasswordVisibilityIcon}
+            onClickIcon={onClickConfirmPasswordVisibilityIcon}
+          />
+        </View>
+
+        <CustomButton
+          title="Đăng ký"
+          onPress={() => alert('Đăng ký')}
+          style={styles.registerButton}
+        />
+
         <Text style={styles.loginText}>
-          Bạn đã có tài khoản?{' '}
-          <Text style={styles.loginLink} onPress={() => { } }>
-            Đăng nhập
-          </Text>
+          Đã có tài khoản? <Text style={styles.loginLink} onPress={() => navigation.navigate('Login')}>Đăng nhập</Text>
         </Text>
       </View>
     </ImageBackground>
   );
-}
-
-export default RegisterScreen;
+};
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    resizeMode: 'cover',
-  },
-  container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  overlay: {
+    width: '90%',
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     padding: 20,
-    margin: 10,
     borderRadius: 10,
+    minHeight: '60%',
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'left',
+    color: '#05834E',
+  },
+  inputs: {
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  registerButton: {
+    backgroundColor: '#05834E',
+    borderRadius: 16,
+    width: '80%',
+    margin: 'auto',
+    borderColor: "#fff",
+    borderWidth: 1,
   },
   loginText: {
-    marginTop: 20,
+    textAlign: 'center',
     color: '#000',
+    marginTop: 20,
+    marginBottom: 60,
   },
   loginLink: {
-    color: '#0066cc',
+    color: '#05834E',
     fontWeight: 'bold',
   },
 });
 
+export default RegisterScreen;
