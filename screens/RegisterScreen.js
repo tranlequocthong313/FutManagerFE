@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, Alert } from 'react-native';
 import CustomInput from '../components/CustomInput';  // Sửa lại đường dẫn
 import CustomButton from '../components/CustomButton';  // Sửa lại đường dẫn
 import { useNavigation } from '@react-navigation/native';
+import validator from 'validator';
+import HTTP, { userEndpoints } from '../configs/apis';
 
 const RegisterScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -67,6 +69,36 @@ const RegisterScreen = () => {
     setHideConfirmPasswordVisibility(prev => !prev);
   };
 
+  const handleRegister = async () => {
+    // Kiểm tra định dạng email và số điện thoại
+    if (!validator.isEmail(email)) {
+      Alert.alert('Lỗi', 'Email không hợp lệ');
+      return;
+    }
+    if (!validator.isMobilePhone(phoneNumber, 'any', { strictMode: false })) {
+      Alert.alert('Lỗi', 'Số điện thoại không hợp lệ');
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert('Lỗi', 'Mật khẩu xác nhận không khớp');
+      return;
+    }
+
+    try {
+      // Gửi yêu cầu đăng ký với dữ liệu JSON
+      await HTTP.post(userEndpoints['register'], {
+        phone_number: phoneNumber,
+        email,
+        full_name: fullName,
+        password,
+      });
+      Alert.alert('Thành công', 'Đăng ký thành công');
+      navigation.navigate('Login');
+    } catch (error) {
+      Alert.alert('Lỗi', 'Đăng ký không thành công');
+    }
+  };
+  
   return (
     <ImageBackground
       source={require('../asset/Loginbackground.jpg')} // Sửa lại đường dẫn
@@ -132,7 +164,7 @@ const RegisterScreen = () => {
 
         <CustomButton
           title="Đăng ký"
-          onPress={() => alert('Đăng ký')}
+          onPress={() => handleRegister()}
           style={styles.registerButton}
         />
 
