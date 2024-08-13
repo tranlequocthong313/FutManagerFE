@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "FutManagerFE",
+    "slug": "FutManagerFE",
+    "version": "1.0.0",
+    "extra": {
+      "eas": {
+        "projectId": "0ab2955d-326f-4516-967e-33cc46d7550a"
+      }
+    },
+    "android": {
+      "package": "com.tranlequocthong313.FutManagerFE"
+    },
+    "splash": {
+      "backgroundColor": "#ffffff"
+    },
+    "owner": "tranlequocthong313"
+  },
+  "name": "FutManagerFE"
+}
