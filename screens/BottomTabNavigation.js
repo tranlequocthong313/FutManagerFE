@@ -34,17 +34,22 @@ function BottomTabNavigation() {
         tabBarInactiveTintColor: "#2ecc71",
         tabBarActiveBackgroundColor: "#2ecc71",
         tabBarStyle: { backgroundColor: "white" },
+        headerTitleAlign: "center",
+        headerTintColor: "#fff",
+        headerStyle: {
+          backgroundColor: "#00C673",
+        },
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="Trang chủ"
         component={HomeScreen}
         options={{
           tabBarLabel: "Home",
         }}
       />
       <Tab.Screen
-        name="Notifications"
+        name="Thông báo"
         component={NotificationsScreen}
         options={{
           tabBarLabel: "Notifications",
@@ -53,14 +58,14 @@ function BottomTabNavigation() {
         }}
       />
       <Tab.Screen
-        name="Account"
+        name="Tài khoản"
         component={AccountScreen}
         options={{
           headerTitleAlign: "center",
           headerTitle: (props) => <AvatarTitle {...props} />,
           headerBackground: () => (
             <ImageBackground
-              source={backgroundImage}
+              source={require("../asset/accountbackground.jpg")}
               style={StyleSheet.absoluteFill}
             />
           ),

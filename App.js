@@ -6,19 +6,17 @@ import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import UserProvider from "./providers/UserProvider";
-import { UserContext } from "./contexts/UserContext";
 import BottomTabNavigation from "./screens/BottomTabNavigation";
+import { navigationRef } from "./utils/RootNavigation";
 
 const Stack = createStackNavigator();
 
 export default function App() {
-  const user = useContext(UserContext);
-
   return (
     <UserProvider>
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator
-          initialRouteName="Login"
+          initialRouteName={"BottomTabNavigation"}
           screenOptions={{
             headerShown: false,
           }}
