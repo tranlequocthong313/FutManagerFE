@@ -1,10 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
-import RegisterInput from '../components/RegisterInput';
-import RegisterButton from '../components/RegisterButton';
 // import loginBackground from '../asset/Loginbackground'
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = () => {
   return (
     <ImageBackground
       // source={loginBackground} // Đặt link ảnh nền
@@ -13,22 +11,18 @@ const RegisterScreen = ({ navigation }) => {
       <View style={styles.container}>
         <Text style={styles.title}>Đăng Ký</Text>
         
-        <RegisterInput placeholder="Số điện thoại hoặc email" icon="close" />
-        <RegisterInput placeholder="Tên đầy đủ" icon="close" />
-        <RegisterInput placeholder="Mật khẩu" icon="eye" secureTextEntry={true} />
-        <RegisterInput placeholder="Nhập lại mật khẩu" icon="eye" secureTextEntry={true} />
-        
-        <RegisterButton title="Đăng Ký" onPress={() => { /* Xử lý đăng ký */ }} />
         <Text style={styles.loginText}>
           Bạn đã có tài khoản?{' '}
-          <Text style={styles.loginLink} onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.loginLink} onPress={() => { } }>
             Đăng nhập
           </Text>
         </Text>
       </View>
     </ImageBackground>
   );
-};
+}
+
+export default RegisterScreen;
 
 const styles = StyleSheet.create({
   background: {
@@ -59,4 +53,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;

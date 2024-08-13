@@ -7,7 +7,6 @@ import CustomButton from '../components/CustomButton';  // Sửa lại đường
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
 
   return (
     <ImageBackground
