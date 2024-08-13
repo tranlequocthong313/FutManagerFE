@@ -6,7 +6,7 @@ import CustomButton from "../components/CustomButton"; // Sửa lại đường 
 import CheckBox from "react-native-check-box";
 import HTTP, { userEndpoints } from "../configs/apis";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../configs/constants";
-import { UserDispatchContext } from "../contexts/UserContext";
+import { UserContext, UserDispatchContext } from "../contexts/UserContext";
 import { USER_ACTION_TYPE } from "../reducers/userReducer";
 
 const LoginScreen = ({ navigation }) => {
@@ -18,6 +18,7 @@ const LoginScreen = ({ navigation }) => {
     useState(false);
   const [hideVisibilityPassword, setHidePasswordVisibility] = useState(true);
   const dispatch = useContext(UserDispatchContext);
+  const user = useContext(UserContext);
 
   const onChangePhoneNumber = (text) => {
     setPhoneNumber(text);
@@ -52,7 +53,10 @@ const LoginScreen = ({ navigation }) => {
           payload: res.data.user,
         });
 
-        navigation.navigate("BottomTabNavigation");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "BottomTabNavigation" }],
+        });
       }
     } catch (error) {
       console.error(error);

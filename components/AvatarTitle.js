@@ -1,12 +1,15 @@
-import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import React from "react";
+import { StyleSheet, Image } from "react-native";
 
 // Import the local avatar image
-const avatarImage = { uri: 'https://placehold.co/200x200/png' }; // Replace with your avatar image source
+const avatarImage = { uri: "https://placehold.co/200x200/png" }; // Replace with your avatar image source
 
 export default function AvatarTitle() {
   return (
-      <Image source={avatarImage} style={styles.avatar} />
+    <Image
+      source={require("../asset/accountavatar.png")}
+      style={styles.avatar}
+    />
   );
 }
 
@@ -17,6 +20,6 @@ const styles = StyleSheet.create({
     height: 80,
     borderWidth: 2,
     borderRadius: 50,
-    borderColor: '#fff',
+    borderColor: "#fff",
   },
 });
