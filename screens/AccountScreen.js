@@ -1,32 +1,40 @@
-import React, { useContext } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { UserContext, UserDispatchContext } from "../contexts/UserContext";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { FontAwesome as Icon } from "@expo/vector-icons";
 import { USER_ACTION_TYPE } from "../reducers/userReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../configs/constants";
-
-// Import the local avatar image and background image
-const backgroundImage = { uri: "https://placekitten.com/600/300" }; // Replace with your background image source
+import {
+  ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  FCM_TOKEN_KEY,
+} from "../configs/constants";
+import { useUser, useUserDispatch } from "../hooks/useUser";
+import { authHTTP, notificationEndpoints } from "../configs/apis";
 
 const AccountScreen = ({ navigation }) => {
-  const user = useContext(UserContext);
-  const dispatch = useContext(UserDispatchContext);
+  const user = useUser();
+  const dispatch = useUserDispatch();
 
   const logout = async () => {
-    // TOOD: delete FCM token
+    try {
+      const storedToken = JSON.parse(await AsyncStorage.getItem(FCM_TOKEN_KEY));
+      if (storedToken) {
+        await (
+          await authHTTP()
+        ).delete(notificationEndpoints.deleteFcmToken(storedToken?.id), {
+          id: storedToken?.id,
+        });
+        await AsyncStorage.removeItem(FCM_TOKEN_KEY);
+      }
+    } catch (error) {
+      console.error(error);
+    }
     dispatch({
       type: USER_ACTION_TYPE.LOGOUT,
     });
-    navigation.navigate("Login");
     await AsyncStorage.removeItem(ACCESS_TOKEN_KEY);
     await AsyncStorage.removeItem(REFRESH_TOKEN_KEY);
+    navigation.navigate("Login");
   };
 
   return (
@@ -57,7 +65,10 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("FieldStatusHistoryStats")}
+        >
           <Icon name="pie-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê tình trạng sân</Text>
         </TouchableOpacity>
@@ -117,7 +128,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   menuText: {
-    marginLeft: 15,
+    marginLeft: 16,
     fontSize: 16,
     color: "#fff",
   },

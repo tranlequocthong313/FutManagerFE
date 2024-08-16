@@ -1,16 +1,24 @@
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { formatDistanceToNow } from "date-fns";
+import { useNotificationAPI } from "../hooks/useNotification";
+import { Image } from "expo-image";
 
 const NotificationItem = ({ notification }) => {
   const timeAgo = formatDistanceToNow(new Date(notification?.created_date), {
     addSuffix: true,
   });
+  const notificationApis = useNotificationAPI();
+
+  const readNotification = async () => {
+    await notificationApis.readNotification(notification);
+  };
 
   return (
     <TouchableOpacity
       key={notification?.id}
       style={[styles.container, !notification?.read && styles.active]}
+      onPress={readNotification}
     >
       {notification?.content?.image ? (
         <Image
