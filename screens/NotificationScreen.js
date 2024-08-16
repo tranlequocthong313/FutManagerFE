@@ -1,40 +1,55 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  RefreshControl,
-  ActivityIndicator,
-} from "react-native";
+import { ScrollView, RefreshControl, ActivityIndicator } from "react-native";
 import { authHTTP, notificationEndpoints } from "../configs/apis";
 import { isCloseToBottom } from "../utils/utils";
 import NotificationItem from "../components/NotificationItem";
+import {
+  useNotification,
+  useNotificationAPI,
+  useNotificationDispatch,
+} from "../hooks/useNotification";
+import { NOTIFICATION_ACTION_TYPE } from "../reducers/notificationReducer";
 
 function NotificationsScreen() {
-  const [notifications, setNotifications] = useState([]);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const dispatch = useNotificationDispatch();
+  const { data: notifications, limit, offset } = useNotification();
+  const [nextPageUrl, setNextPageUrl] = useState(null);
+  const [url, setUrl] = useState(notificationEndpoints.notifications);
+  const [isNext, setIsNext] = useState(false);
+
+  const getQueries = (url) => {
+    if (!url) {
+      return {};
+    }
+    const { searchParams } = new URL(url);
+    if (searchParams) {
+      return Object.fromEntries([...searchParams.entries()]);
+    }
+    return {};
+  };
 
   useEffect(() => {
     loadNotifications();
-  }, [page]);
+  }, [dispatch, url, isNext]);
 
   const loadNotifications = async () => {
-    if (page <= 0) {
-      return;
-    }
-
     try {
       setLoading(true);
-      const url = `${notificationEndpoints.notifications}?page=${page}`;
       const res = await (await authHTTP()).get(url);
-      if (page === 1) {
-        setNotifications(res.data.results);
-      } else if (page > 1) {
-        setNotifications((prev) => [...prev, ...res.data.results]);
-      }
-      if (res.data.next === null) {
-        setPage(0);
-      }
+      const { limit: _limit, offset: _offset } = getQueries(res.data.next);
+      dispatch({
+        type: isNext
+          ? NOTIFICATION_ACTION_TYPE.INFINITE_SCROLL
+          : NOTIFICATION_ACTION_TYPE.LOAD,
+        payload: {
+          badge: res.data.badge,
+          data: res.data.results,
+          limit: Number(_limit),
+          offset: Number(_offset),
+        },
+      });
+      setNextPageUrl(res.data.next);
     } catch (error) {
       console.error(error);
     } finally {
@@ -43,34 +58,23 @@ function NotificationsScreen() {
   };
 
   const loadMoreNotifications = ({ nativeEvent }) => {
-    if (!loading && isCloseToBottom(nativeEvent)) {
-      setPage(page + 1);
+    if (nextPageUrl && !loading && isCloseToBottom(nativeEvent)) {
+      setIsNext(true);
+      setUrl(
+        `${notificationEndpoints.notifications}?limit=${String(limit)}&offset=${String(offset)}`,
+      );
     }
   };
 
   return (
     <ScrollView onScroll={loadMoreNotifications}>
       <RefreshControl onRefresh={loadNotifications} />
-      {loading && <ActivityIndicator />}
       {notifications.map((notification) => (
         <NotificationItem key={notification.id} notification={notification} />
       ))}
-      {loading && page > 1 && <ActivityIndicator />}
+      {loading && <ActivityIndicator />}
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#2ecc71",
-  },
-  text: {
-    fontSize: 24,
-    color: "#fff",
-  },
-});
 
 export default NotificationsScreen;

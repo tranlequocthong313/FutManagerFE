@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, ImageBackground, StyleSheet, Alert } from "react-native";
-import CustomInput from "../components/CustomInput"; // Sửa lại đường dẫn
-import CustomButton from "../components/CustomButton"; // Sửa lại đường dẫn
+import { View, Text, StyleSheet, Alert } from "react-native";
+import CustomInput from "../components/CustomInput";
+import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import validator from "validator";
 import HTTP, { userEndpoints } from "../configs/apis";
+import { ImageBackground } from "expo-image";
 
 const RegisterScreen = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -107,7 +108,9 @@ const RegisterScreen = () => {
 
   return (
     <ImageBackground
-      source={require("../asset/Loginbackground.jpg")} // Sửa lại đường dẫn
+      source={{
+        uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804781/aiqficeawcxvzfiammok.jpg",
+      }}
       style={styles.background}
     >
       <View style={styles.overlay}>
@@ -118,11 +121,14 @@ const RegisterScreen = () => {
             label="Tên đầy đủ"
             value={fullName}
             onChangeText={onChangeFullName}
-            icon="clear"
+            icon="close"
             styleIcon={{
               backgroundColor: "#000",
               color: "#fff",
               borderRadius: 50,
+              width: 24,
+              height: 24,
+              textAlign: "center",
             }}
             size={18}
             showIcon={showClearFullNameIcon}
@@ -132,11 +138,14 @@ const RegisterScreen = () => {
             label="Email"
             value={email}
             onChangeText={onChangeEmail}
-            icon="clear"
+            icon="close"
             styleIcon={{
               backgroundColor: "#000",
               color: "#fff",
               borderRadius: 50,
+              width: 24,
+              height: 24,
+              textAlign: "center",
             }}
             size={18}
             showIcon={showClearEmailIcon}
@@ -146,11 +155,14 @@ const RegisterScreen = () => {
             label="Số điện thoại"
             value={phoneNumber}
             onChangeText={onChangePhoneNumber}
-            icon="clear"
+            icon="close"
             styleIcon={{
               backgroundColor: "#000",
               color: "#fff",
               borderRadius: 50,
+              width: 24,
+              height: 24,
+              textAlign: "center",
             }}
             size={18}
             showIcon={showClearPhoneNumberIcon}
@@ -161,7 +173,7 @@ const RegisterScreen = () => {
             value={password}
             onChangeText={onChangePassword}
             secureTextEntry={hideVisibilityPassword}
-            icon={hideVisibilityPassword ? "visibility-off" : "visibility"}
+            icon={hideVisibilityPassword ? "eye-slash" : "eye"}
             size={24}
             showIcon={showPasswordVisibilityIcon}
             onClickIcon={onClickPasswordVisibilityIcon}
@@ -171,9 +183,7 @@ const RegisterScreen = () => {
             value={confirmPassword}
             onChangeText={onChangeConfirmPassword}
             secureTextEntry={hideVisibilityConfirmPassword}
-            icon={
-              hideVisibilityConfirmPassword ? "visibility-off" : "visibility"
-            }
+            icon={hideVisibilityConfirmPassword ? "eye-slash" : "eye"}
             size={24}
             showIcon={showConfirmPasswordVisibilityIcon}
             onClickIcon={onClickConfirmPasswordVisibilityIcon}
@@ -231,6 +241,7 @@ const styles = StyleSheet.create({
     margin: "auto",
     borderColor: "#fff",
     borderWidth: 1,
+    alignSelf: "center",
   },
   loginText: {
     textAlign: "center",

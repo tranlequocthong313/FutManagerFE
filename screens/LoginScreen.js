@@ -1,13 +1,14 @@
-import React, { useContext, useState } from "react";
-import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CustomInput from "../components/CustomInput"; // Sửa lại đường dẫn
-import CustomButton from "../components/CustomButton"; // Sửa lại đường dẫn
-import CheckBox from "react-native-check-box";
+import CustomInput from "../components/CustomInput";
+import CustomButton from "../components/CustomButton";
+import Checkbox from "expo-checkbox";
 import HTTP, { userEndpoints } from "../configs/apis";
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "../configs/constants";
-import { UserContext, UserDispatchContext } from "../contexts/UserContext";
 import { USER_ACTION_TYPE } from "../reducers/userReducer";
+import { useUserDispatch } from "../hooks/useUser";
+import { ImageBackground } from "expo-image";
 
 const LoginScreen = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -17,8 +18,7 @@ const LoginScreen = ({ navigation }) => {
   const [showPasswordVisibilityIcon, setShowPasswordVisibilityIcon] =
     useState(false);
   const [hideVisibilityPassword, setHidePasswordVisibility] = useState(true);
-  const dispatch = useContext(UserDispatchContext);
-  const user = useContext(UserContext);
+  const dispatch = useUserDispatch();
 
   const onChangePhoneNumber = (text) => {
     setPhoneNumber(text);
@@ -57,6 +57,8 @@ const LoginScreen = ({ navigation }) => {
           index: 0,
           routes: [{ name: "BottomTabNavigation" }],
         });
+      } else {
+        console.error(res.data?.message);
       }
     } catch (error) {
       console.error(error);
@@ -65,7 +67,9 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require("../asset/Loginbackground.jpg")}
+      source={{
+        uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804781/aiqficeawcxvzfiammok.jpg",
+      }}
       style={styles.background}
     >
       <View style={styles.overlay}>
@@ -76,11 +80,14 @@ const LoginScreen = ({ navigation }) => {
             label="Số điện thoại"
             value={phoneNumber}
             onChangeText={onChangePhoneNumber}
-            icon="clear"
+            icon="close"
             styleIcon={{
               backgroundColor: "#000",
               color: "#fff",
               borderRadius: 50,
+              width: 24,
+              height: 24,
+              textAlign: "center",
             }}
             size={18}
             showIcon={showClearUsernameIcon}
@@ -91,7 +98,7 @@ const LoginScreen = ({ navigation }) => {
             value={password}
             onChangeText={onChangePassword}
             secureTextEntry={hideVisibilityPassword}
-            icon={hideVisibilityPassword ? "visibility-off" : "visibility"} // visibility-off
+            icon={hideVisibilityPassword ? "eye-slash" : "eye"}
             size={24}
             showIcon={showPasswordVisibilityIcon}
             onClickIcon={onClickPasswordVisibilityIcon}
@@ -99,11 +106,10 @@ const LoginScreen = ({ navigation }) => {
         </View>
 
         <View style={styles.rememberMeContainer}>
-          <CheckBox
-            isChecked={rememberMe}
-            onClick={() => setRememberMe((prev) => !prev)}
-            checkBoxColor="#05834E"
-            checkedCheckBoxColor="#05834E"
+          <Checkbox
+            value={rememberMe}
+            onValueChange={() => setRememberMe((prev) => !prev)}
+            color="#05834E"
           />
           <Text style={styles.rememberMeText}>Nhớ tài khoản</Text>
         </View>
@@ -171,9 +177,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#05834E",
     borderRadius: 16,
     width: "80%",
-    margin: "auto",
+    marginHorizontal: "auto",
     borderColor: "#fff",
     borderWidth: 1,
+    alignSelf: "center",
   },
   registerText: {
     textAlign: "center",

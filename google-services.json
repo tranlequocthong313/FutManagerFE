@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1032485716187",
+    "project_id": "futmanager-c0b9a",
+    "storage_bucket": "futmanager-c0b9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032485716187:android:0614beca9e950167258cfe",
+        "android_client_info": {
+          "package_name": "com.tranlequocthong313.FutManagerFE"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIpQnKfYInBX9fxLitqnYkCydhZOq5HkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,34 +1,28 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import AccountScreen from "./AccountScreen";
 import NotificationsScreen from "./NotificationScreen";
-import Icon from "react-native-vector-icons/Ionicons";
-import AvatarTitle from "../components/AvatarTitle";
-import { ImageBackground } from "react-native";
+import { FontAwesome as Icon } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreen";
+import AccountNavigation from "./AccountNavigation";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { useNotification } from "../hooks/useNotification";
+
+const ICONS = {
+  Home: "calendar",
+  Notification: "bell",
+  AccountNavigation: "user-circle",
+};
 
 const Tab = createBottomTabNavigator();
 
-const backgroundImage = { uri: "https://placehold.co/600x300/png" };
-
 function BottomTabNavigation() {
+  const notification = useNotification();
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
-          if (route.name === "Home") {
-            iconName = "calendar";
-          } else if (route.name === "Notifications") {
-            iconName = "notifications";
-          } else if (route.name === "Account") {
-            iconName = "person";
-          }
-
-          return <Icon name={iconName} size={size} color={color} />;
+          return <Icon name={ICONS[route.name]} size={size} color={color} />;
         },
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#2ecc71",
@@ -42,33 +36,29 @@ function BottomTabNavigation() {
       })}
     >
       <Tab.Screen
-        name="Trang chủ"
+        name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Trang chủ",
+          headerTitle: "Trang chủ",
         }}
       />
       <Tab.Screen
-        name="Thông báo"
+        name="Notification"
         component={NotificationsScreen}
         options={{
-          tabBarLabel: "Notifications",
-          tabBarBadge: 3,
+          tabBarLabel: "Thông báo",
+          tabBarBadge: notification.badge,
           tabBarBadgeStyle: { backgroundColor: "red" },
+          headerTitle: "Thông báo",
         }}
       />
       <Tab.Screen
-        name="Tài khoản"
-        component={AccountScreen}
+        name="AccountNavigation"
+        component={AccountNavigation}
         options={{
-          headerTitleAlign: "center",
-          headerTitle: (props) => <AvatarTitle {...props} />,
-          headerBackground: () => (
-            <ImageBackground
-              source={require("../asset/accountbackground.jpg")}
-              style={StyleSheet.absoluteFill}
-            />
-          ),
+          tabBarLabel: "Tài khoản",
+          headerShown: false,
         }}
       />
     </Tab.Navigator>

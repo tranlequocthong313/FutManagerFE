@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, TextInput, StyleSheet, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React from "react";
+import { View, TextInput, StyleSheet, Text } from "react-native";
+import { FontAwesome as Icon } from "@expo/vector-icons";
 
 const CustomInput = ({
   placeholder,
@@ -12,7 +12,7 @@ const CustomInput = ({
   styleIcon,
   size,
   showIcon,
-  onClickIcon
+  onClickIcon,
 }) => {
   return (
     <View style={styles.container}>
@@ -24,10 +24,17 @@ const CustomInput = ({
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry}
+          autoCapitalize="none"
         />
-        {showIcon && 
-          <Icon onPress={onClickIcon} style={{...styles.icon, ...styleIcon}} name={icon} size={size} color="#000" />
-        }
+        {showIcon && (
+          <Icon
+            onPress={onClickIcon}
+            style={{ ...styles.icon, ...styleIcon }}
+            name={icon}
+            size={size}
+            color="#000"
+          />
+        )}
       </View>
     </View>
   );
@@ -35,35 +42,35 @@ const CustomInput = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: "100%",
     marginVertical: 10,
   },
   inputContainer: {
-    display: 'flex',
-    flexDirection: 'row'
+    display: "flex",
+    flexDirection: "row",
   },
   icon: {
     padding: 2,
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     margin: 10,
-    marginRight: 14
+    marginRight: 14,
   },
   label: {
-    color: '#05834E',
+    color: "#05834E",
     marginBottom: 8,
-    fontWeight: 'bold'
+    fontWeight: "bold",
   },
   input: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     paddingHorizontal: 8,
     paddingLeft: 16,
     paddingVertical: 8,
     borderRadius: 16,
     fontSize: 16,
     borderWidth: 1,
-    borderColor: '#05834E'
+    borderColor: "#05834E",
   },
 });
 

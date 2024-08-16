@@ -1,13 +1,13 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
-
-// Import the local avatar image
-const avatarImage = { uri: "https://placehold.co/200x200/png" }; // Replace with your avatar image source
+import { StyleSheet } from "react-native";
+import { Image } from "expo-image";
 
 export default function AvatarTitle() {
   return (
     <Image
-      source={require("../asset/accountavatar.png")}
+      source={{
+        uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804774/r04iqcz0m6lpmqlj7pp0.png",
+      }}
       style={styles.avatar}
     />
   );
