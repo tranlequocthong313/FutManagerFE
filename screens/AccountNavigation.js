@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet } from "react-native";
 import AvatarTitle from "../components/AvatarTitle";
 import { ImageBackground } from "expo-image";
+import FieldRevenueStats from "./FieldRevenueStats";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,22 @@ export default function AccountNavigation() {
           tabBarActiveBackgroundColor: "#2ecc71",
           tabBarStyle: { backgroundColor: "white" },
           headerTitleAlign: "center",
+          headerTintColor: "#fff",
+          headerStyle: {
+            backgroundColor: "#00C673",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="FieldRevenueStats"  
+        component={FieldRevenueStats}  
+        options={{
+          headerTitle: "Thống kê doanh thu sân", 
+          headerTitleAlign: "center",
+          tabBarActiveTintColor: "#fff",
+          tabBarInactiveTintColor: "#2ecc71",
+          tabBarActiveBackgroundColor: "#2ecc71",
+          tabBarStyle: { backgroundColor: "white" },
           headerTintColor: "#fff",
           headerStyle: {
             backgroundColor: "#00C673",

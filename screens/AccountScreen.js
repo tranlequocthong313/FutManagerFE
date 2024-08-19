@@ -55,7 +55,12 @@ const AccountScreen = ({ navigation }) => {
 
         <View style={styles.divider} />
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => {;
+             navigation.navigate('FieldRevenueStats');
+          }}
+        >
           <Icon name="line-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê doanh thu</Text>
         </TouchableOpacity>
