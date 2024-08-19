@@ -1,3 +1,4 @@
+
 import messaging from "@react-native-firebase/messaging";
 import React, { useEffect } from "react";
 import { View, Text, StyleSheet, PermissionsAndroid } from "react-native";
