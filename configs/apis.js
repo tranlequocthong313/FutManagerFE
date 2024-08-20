@@ -4,7 +4,7 @@ import { ACCESS_TOKEN_KEY } from "./constants";
 import * as RootNavigation from "../utils/RootNavigation";
 
 // const baseURL = "https://futmanagerbe.onrender.com";
-const baseURL = "http://192.168.1.175:8000"
+const baseURL = "http://192.168.0.127:8000"
 
 export const userEndpoints = {
   login: "/users/login/",
@@ -16,6 +16,7 @@ export const fieldEndpoints = {
   fields: "/fields",
   book: (id) => `/fields/${id}/book/`,
   bookings: (id) => `/fields/${id}/bookings/`,
+  reviews: (id) => `/fields/${id}/ratings/`,
 };
 
 export const notificationEndpoints = {

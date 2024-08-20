@@ -4,22 +4,22 @@ import { FontAwesome } from '@expo/vector-icons';
 import { formatDistanceToNow, vi } from 'date-fns'; // Import Vietnamese locale
 import Divider from './Divider';
 
-const UserReview = ({ rating = 0, reviewCount = 0, createDate = new Date() }) => {
-    const [showMore, setShowMore] = useState(false);
-    const reviewText = "This is a detailed review text that will be shown when 'Show More' is clicked. This part can be much longer, providing more details about the review and the user's experience.";
+const UserReview = ({ rating = 0, reviewCount = 0, reviews = [] }) => {
+    const [showMore, setShowMore] = useState({}); // Track expanded state for each review
 
-    const toggleShowMore = () => {
-        setShowMore(!showMore);
+    const toggleShowMore = (id) => {
+        setShowMore((prev) => ({ ...prev, [id]: !prev[id] }));
     };
 
     // Function to get the first 5 words and append '...' if truncated
-    const displayText = () => {
-        const words = reviewText.split(' ');
-        if (showMore) {
-            return reviewText;
-        } else {
-            return words.length > 5 ? words.slice(0, 5).join(' ') + '...' : reviewText;
-        }
+    const displayText = (text, show) => {
+        const words = text.split(' ');
+        return show ? text : (words.length > 5 ? words.slice(0, 5).join(' ') + '...' : text);
+    };
+
+    // Function to determine if "Show More" button should be displayed
+    const shouldShowMoreButton = (text) => {
+        return text.split(' ').length > 5; 
     };
 
     return (
@@ -44,39 +44,43 @@ const UserReview = ({ rating = 0, reviewCount = 0, createDate = new Date() }) =>
                 </View>
             </View>
             <Divider />
-            <View style={styles.userReview}>
-                <Image
-                    source={{
-                        uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804779/tycwpxoyw3mha6aoqqzd.jpg",
-                    }}
-                    style={styles.userImage}
-                />
-                <View style={styles.userInfo}>
-                    <Text style={styles.userName}>User name</Text>
-                    <View style={styles.userRating}>
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <FontAwesome
-                                key={star}
-                                name="star"
-                                size={24}
-                                color="#E2C113"
-                                style={styles.starIcon}
-                            />
-                        ))}
-                    </View>
-                    <Text style={styles.reviewDate}>
-                        {createDate ? `${formatDistanceToNow(new Date(createDate), { addSuffix: true, locale: vi })}` : ''}
-                    </Text>
-                    <Text style={styles.reviewText}>
-                        {displayText()}
-                    </Text>
-                    <TouchableOpacity onPress={toggleShowMore}>
-                        <Text style={styles.showMoreText}>
-                            {showMore ? "Ẩn bớt" : "Hiện thêm"}
+            {reviews.map((review) => (
+                <View key={review.id} style={styles.userReview}>
+                    <Image
+                        source={{
+                            uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804779/tycwpxoyw3mha6aoqqzd.jpg",
+                        }}
+                        style={styles.userImage}
+                    />
+                    <View style={styles.userInfo}>
+                        <Text style={styles.userName}>{review.user.full_name}</Text>
+                        <View style={styles.userRating}>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <FontAwesome
+                                    key={star}
+                                    name={star <= review.rating ? 'star' : 'star-o'}
+                                    size={24}
+                                    color={star <= review.rating ? '#E2C113' : '#fff'}
+                                    style={styles.starIcon}
+                                />
+                            ))}
+                        </View>
+                        <Text style={styles.reviewDate}>
+                            {review.created_date ? `${formatDistanceToNow(new Date(review.created_date), { addSuffix: true, locale: vi })}` : ''}
                         </Text>
-                    </TouchableOpacity>
+                        <Text style={styles.reviewText}>
+                            {displayText(review.review, showMore[review.id])}
+                        </Text>
+                        {shouldShowMoreButton(review.review) && (
+                            <TouchableOpacity onPress={() => toggleShowMore(review.id)}>
+                                <Text style={styles.showMoreText}>
+                                    {showMore[review.id] ? "Ẩn bớt" : "Hiện thêm"}
+                                </Text>
+                            </TouchableOpacity>
+                        )}
+                    </View>
                 </View>
-            </View>
+            ))}
         </View>
     );
 };
