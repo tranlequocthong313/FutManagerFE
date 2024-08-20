@@ -67,7 +67,6 @@ export default function AccountNavigation() {
         component={ReviewScreen} // Component ReviewScreen
         options={{
           headerTitle: "Thống kê tình trạng sân",
-
           headerTitleAlign: "center",
           tabBarActiveTintColor: "#fff",
           tabBarInactiveTintColor: "#2ecc71",

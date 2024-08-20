@@ -1,20 +1,18 @@
 import React from 'react';
-import { View, ScrollView, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import Rating from '../components/Rating';
 import UserReview from '../components/UserReview';
-import FloatingChatBubble from '../components/FloatingChatBubble'; // Nhập component FloatingChatBubble
 
-export default function ReviewScreen() {
+const ReviewScreen = () => {
     return (
         <View style={styles.container}>
             <ScrollView style={styles.scrollView}>
                 <Rating />
-                <UserReview />
-                
+                <UserReview rating={4.0} reviewCount={1253} />
             </ScrollView>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -23,11 +21,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         flex: 1,
-        padding: 10,
-    },
-    header: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        marginVertical: 10,
     },
 });
+
+export default ReviewScreen;
