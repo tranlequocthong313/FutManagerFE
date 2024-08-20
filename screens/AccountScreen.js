@@ -10,6 +10,7 @@ import {
 } from "../configs/constants";
 import { useUser, useUserDispatch } from "../hooks/useUser";
 import { authHTTP, notificationEndpoints } from "../configs/apis";
+import Divider from "../components/Divider";
 
 const AccountScreen = ({ navigation }) => {
   const user = useUser();
@@ -53,7 +54,7 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.menuText}>Nhơn Đức, Nhà Bè, Hồ Chí Minh</Text>
         </TouchableOpacity>
 
-        <View style={styles.divider} />
+        <Divider />
 
         <TouchableOpacity 
           style={styles.menuItem}
@@ -65,7 +66,10 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.menuText}>Thống kê doanh thu</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("ReviewScreen")}
+        >
           <Icon name="bar-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
         </TouchableOpacity>
@@ -78,7 +82,7 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.menuText}>Thống kê tình trạng sân</Text>
         </TouchableOpacity>
 
-        <View style={styles.divider} />
+        <Divider />
 
         <TouchableOpacity style={styles.menuItem}>
           <Icon name="question-circle" size={20} color="#fff" />
@@ -90,7 +94,7 @@ const AccountScreen = ({ navigation }) => {
           <Text style={styles.menuText}>Giới thiệu</Text>
         </TouchableOpacity>
 
-        <View style={styles.divider} />
+        <Divider />
 
         <TouchableOpacity style={styles.menuItem} onPress={logout}>
           <Icon name="sign-out" size={20} color="red" />
