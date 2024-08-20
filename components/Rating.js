@@ -1,25 +1,76 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { authHTTP, fieldEndpoints } from '../configs/apis'; // Ensure this import path is correct
 
-const Rating = () => {
-    const [rating, setRating] = useState(0); // Initial rating value
-    const [isInputVisible, setIsInputVisible] = useState(false); // Manage input visibility
+const Rating = ({ fieldId, onSuccess }) => {
+    const [rating, setRating] = useState(0);
+    const [reviewText, setReviewText] = useState('');
+    const [isInputVisible, setIsInputVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [hasReviewed, setHasReviewed] = useState(false);
+
+    useEffect(() => {
+        // Check if the user has already reviewed this field
+        const checkIfReviewed = async () => {
+            try {
+                const axiosInstance = await authHTTP();
+                const response = await axiosInstance.get(fieldEndpoints.reviews(fieldId));
+
+                if (response.data.is_reviewed === true) {
+                    setHasReviewed(true);
+                }
+            } catch (error) {
+                console.error('Error checking if reviewed:', error);
+            }
+        };
+
+        checkIfReviewed();
+    }, [fieldId]);
 
     const handleRating = (star) => {
         setRating(star);
-        setIsInputVisible(true); // Show input field when rating is selected
+        setIsInputVisible(true);
     };
 
     const handleCancel = () => {
-        setRating(0); // Reset rating
-        setIsInputVisible(false); // Hide input field
+        setRating(0);
+        setReviewText('');
+        setIsInputVisible(false);
     };
 
-    const handleSubmit = () => {
-        // Handle the submit action here
-        // e.g., send rating and review to the server
-        setIsInputVisible(false); // Hide input field after submission
+    const handleSubmit = async () => {
+        setLoading(true);
+
+        if (!reviewText.trim()) {
+            setLoading(false);
+            Alert.alert('Error', 'Please enter your review before submitting.');
+            return;
+        }
+
+        try {
+            const axiosInstance = await authHTTP();
+            const response = await axiosInstance.post(fieldEndpoints.reviews(fieldId), {
+                rating,
+                review: reviewText,
+            });
+
+            if (response.status === 201) {
+                Alert.alert('Success', 'Your rating has been submitted successfully.');
+                setRating(0);
+                setReviewText('');
+                setIsInputVisible(false);
+                setHasReviewed(true); // Hide the star rating after successful submission
+                if (onSuccess) {
+                    onSuccess();
+                }
+            }
+        } catch (error) {
+            console.error('Error submitting rating:', error);
+            Alert.alert('Error', 'There was an error submitting your rating.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -34,18 +85,20 @@ const Rating = () => {
                     <Text style={styles.fieldText}>Loại sân: sân 5</Text>
                 </View>
             </View>
-            <View style={styles.starContainer}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                    <FontAwesome
-                        key={star}
-                        name={star <= rating ? 'star' : 'star-o'}
-                        size={50}
-                        color={star <= rating ? '#E2C113' : '#fff'}
-                        style={styles.starIcon}
-                        onPress={() => handleRating(star)}
-                    />
-                ))}
-            </View>
+            {!hasReviewed && (
+                <View style={styles.starContainer}>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <FontAwesome
+                            key={star}
+                            name={star <= rating ? 'star' : 'star-o'}
+                            size={50}
+                            color={star <= rating ? '#E2C113' : '#fff'}
+                            style={styles.starIcon}
+                            onPress={() => handleRating(star)}
+                        />
+                    ))}
+                </View>
+            )}
             {isInputVisible && (
                 <View style={styles.containerReview}>
                     <Text style={styles.labelInput}>Nhận xét</Text>
@@ -53,13 +106,17 @@ const Rating = () => {
                         style={styles.input}
                         multiline
                         numberOfLines={4}
+                        value={reviewText}
+                        onChangeText={setReviewText}
                     />
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity style={[styles.button, styles.buttonCancel]} onPress={handleCancel}>
                             <Text style={styles.buttonText}>Hủy</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.buttonSubmit]} onPress={handleSubmit}>
-                            <Text style={styles.buttonText}>Đánh giá</Text>
+                        <TouchableOpacity style={[styles.button, styles.buttonSubmit]} onPress={handleSubmit} disabled={loading}>
+                            <Text style={styles.buttonText}>
+                                {loading ? 'Đang gửi...' : 'Đánh giá'}
+                            </Text>
                         </TouchableOpacity>
                     </View>
                 </View>

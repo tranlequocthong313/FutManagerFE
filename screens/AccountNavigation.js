@@ -78,6 +78,9 @@ export default function AccountNavigation() {
           },
         }}
       />
+
+
+      
     </Stack.Navigator>
   );
 }

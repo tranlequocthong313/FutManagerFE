@@ -68,7 +68,7 @@ const AccountScreen = ({ navigation }) => {
 
         <TouchableOpacity 
           style={styles.menuItem}
-          onPress={() => navigation.navigate("ReviewScreen")}
+          onPress={() => navigation.navigate("")}
         >
           <Icon name="bar-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
@@ -80,6 +80,14 @@ const AccountScreen = ({ navigation }) => {
         >
           <Icon name="pie-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê tình trạng sân</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("ReviewScreen")}
+        >
+          <Icon name="bar-chart" size={20} color="#fff" />
+          <Text style={styles.menuText}>Đánh giá sân</Text>
         </TouchableOpacity>
 
         <Divider />
