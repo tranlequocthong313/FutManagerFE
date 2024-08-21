@@ -78,12 +78,17 @@ const AccountScreen = ({ navigation }) => {
 
         <View style={styles.divider} />
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("HelpScreen")}
+        >
           <Icon name="question-circle" size={20} color="#fff" />
           <Text style={styles.menuText}>Trợ giúp</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity style={styles.menuItem}
+        onPress={() => navigation.navigate("AboutScreen")}
+        >
           <Icon name="info-circle" size={20} color="#fff" />
           <Text style={styles.menuText}>Giới thiệu</Text>
         </TouchableOpacity>
