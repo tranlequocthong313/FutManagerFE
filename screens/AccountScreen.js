@@ -62,11 +62,18 @@ const AccountScreen = ({ navigation }) => {
 
         <TouchableOpacity 
           style={styles.menuItem}
-          onPress={() => navigation.navigate("ReviewScreen")}
+          onPress={() => navigation.navigate("StatisticsRatingScreen")}
         >
           <Icon name="bar-chart" size={20} color="#fff" />
           <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
         </TouchableOpacity>
+        {/* <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("ReviewScreen")}
+        >
+          <Icon name="bar-chart" size={20} color="#fff" />
+          <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={styles.menuItem}

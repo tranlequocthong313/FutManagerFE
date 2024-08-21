@@ -4,6 +4,7 @@ import AccountScreen from "./AccountScreen";
 import ReviewScreen from "./ReviewScreen"; // Thêm import cho ReviewScreen
 import AboutScreen from "./AboutScreen"; // Thêm import cho AboutScreen
 import HelpScreen from "./HelpScreen";
+import StatisticsRatingScreen from "./StatisticsRatingScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StyleSheet } from "react-native";
 import AvatarTitle from "../components/AvatarTitle";
@@ -47,7 +48,7 @@ export default function AccountNavigation() {
           },
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ReviewScreen" // Tên của màn hình mới
         component={ReviewScreen} // Component ReviewScreen
         options={{
@@ -63,8 +64,26 @@ export default function AccountNavigation() {
             backgroundColor: "#00C673",
           },
         }}
+      /> */}
+      <Stack.Screen
+        name="StatisticsRatingScreen" // Tên của màn hình mới
+        component={StatisticsRatingScreen} // Component ReviewScreen
+        options={{
+          headerTitle: "Thống kê đánh giá sân",
+          headerTitleAlign: "center",
+          tabBarActiveTintColor: "#fff",
+          tabBarInactiveTintColor: "#2ecc71",
+          tabBarActiveBackgroundColor: "#2ecc71",
+          tabBarStyle: { backgroundColor: "white" },
+          headerTitleAlign: "center",
+          headerTintColor: "#fff",
+          headerStyle: {
+            backgroundColor: "#00C673",
+          },
+        }}
       />
-       <Stack.Screen
+
+      <Stack.Screen
         name="AboutScreen" // Tên của màn hình mới
         component={AboutScreen} // Component ReviewScreen
         options={{
