@@ -9,6 +9,7 @@ import {
   useNotificationDispatch,
 } from "../hooks/useNotification";
 import { NOTIFICATION_ACTION_TYPE } from "../reducers/notificationReducer";
+import FieldList from "./FieldList";
 
 function HomeScreen({ navigation }) {
   const notificationDispatch = useNotificationDispatch();
@@ -135,23 +136,23 @@ function HomeScreen({ navigation }) {
   }, [navigation, notificationDispatch, notificationAPIs]);
 
   return (
-    <View style={styles}>
-      <Text>Home</Text>
-    </View>
+  
+      <FieldList />
+
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#2ecc71",
-  },
-  text: {
-    fontSize: 24,
-    color: "#fff",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     backgroundColor: "#2ecc71",
+//   },
+//   text: {
+//     fontSize: 24,
+//     color: "#fff",
+//   },
+// });
 
 export default HomeScreen;

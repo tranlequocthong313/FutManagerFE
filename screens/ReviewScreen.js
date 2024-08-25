@@ -4,17 +4,16 @@ import Rating from '../components/Rating';
 import UserReview from '../components/UserReview';
 import { authHTTP, fieldEndpoints } from '../configs/apis';
 
-const ReviewScreen = () => {
+const ReviewScreen = ({route}) => {
     const [reviewData, setReviewData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const fieldId = 6; // Set the field ID here, or fetch dynamically if needed
+    const {fieldId} = route.params;
 
     const fetchReviewData = async () => {
         try {
             const instance = await authHTTP();
             const response = await instance.get(fieldEndpoints.reviews(fieldId));
-            console.log("Response data:", response.data); // Debugging line
             setReviewData(response.data);
         } catch (error) {
             console.error("Error fetching data:", error); // Debugging line

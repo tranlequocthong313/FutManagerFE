@@ -13,7 +13,6 @@ const FloatingChatBubble = () => {
         const fetchCustomerSupports = async () => {
             try {
                 const res = await HTTP.get(serviceEndpoints.customerSupports)
-                console.log(res.data)
                 if (res.status === 200) {
                     setCustomerSupports(res.data.results)
                 } else {
@@ -41,7 +40,6 @@ const FloatingChatBubble = () => {
         let fieldMasterId = getServiceContent(["fb", "facebook"]) || "400753249778273";
 
         Linking.canOpenURL('https://').then(supported => {
-            console.log(supported)
             if (!supported) {
                 console.log('Can\'t handle url: ');
             } else {
