@@ -54,34 +54,38 @@ const AccountScreen = ({ navigation }) => {
                     <Text style={styles.menuText}>Nhơn Đức, Nhà Bè, Hồ Chí Minh</Text>
                 </TouchableOpacity>
 
-                <Divider />
+                {user?.role === "admin" &&
+                    <>
+                        <Divider />
 
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => {
-                        ;
-                        navigation.navigate('FieldRevenueStats');
-                    }}
-                >
-                    <Icon name="line-chart" size={20} color="#fff" />
-                    <Text style={styles.menuText}>Thống kê doanh thu</Text>
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.menuItem}
+                            onPress={() => {
+                                ;
+                                navigation.navigate('FieldRevenueStats');
+                            }}
+                        >
+                            <Icon name="line-chart" size={20} color="#fff" />
+                            <Text style={styles.menuText}>Thống kê doanh thu</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate("StatisticsRatingScreen")}
-                >
-                    <Icon name="bar-chart" size={20} color="#fff" />
-                    <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.menuItem}
+                            onPress={() => navigation.navigate("StatisticsRatingScreen")}
+                        >
+                            <Icon name="bar-chart" size={20} color="#fff" />
+                            <Text style={styles.menuText}>Thống kê đánh giá sân</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate("FieldStatusHistoryStats")}
-                >
-                    <Icon name="pie-chart" size={20} color="#fff" />
-                    <Text style={styles.menuText}>Thống kê tình trạng sân</Text>
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.menuItem}
+                            onPress={() => navigation.navigate("FieldStatusHistoryStats")}
+                        >
+                            <Icon name="pie-chart" size={20} color="#fff" />
+                            <Text style={styles.menuText}>Thống kê tình trạng sân</Text>
+                        </TouchableOpacity>
+                    </>
+                }
 
                 <Divider />
 
