@@ -3,7 +3,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./HomeScreen";
 import ReviewScreen from "./ReviewScreen";
 import FieldBooking from "./FieldBooking";
-import HeaderWithFilter from "../components/HeaderWithFilter";
 import FieldInfor from "./FieldInfor";
 import FieldPayment from "./FieldPayment";
 import WebViewScreen from "./WebViewScreen";
@@ -18,7 +17,7 @@ export default function FieldNavigation() {
                 name="HomeScreen"
                 component={HomeScreen}
                 options={{
-                    header: () => <HeaderWithFilter />,
+                    headerShown: false,
                 }}
             />
             <Stack.Screen

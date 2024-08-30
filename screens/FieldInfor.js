@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { format } from 'date-fns'; // Ensure date-fns is imported
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -42,56 +42,59 @@ const FieldInfor = ({ route }) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.card}>
-                <Image
-                    source={field.img ? { uri: field.img } : { uri: "https://res.cloudinary.com/dh1irfap0/image/upload/v1724499901/footballfieldicon_n8mbgs.png" }}
-                    style={styles.image}
-                />
-                <View style={styles.cardContent}>
-                    <Text style={styles.fieldName}>{field.name}</Text>
-                    <Text style={styles.fieldNumber}>Loại sân: Sân {field.field_type}</Text>
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <View style={styles.card}>
+                    <Image
+                        source={field.img ? { uri: field.img } : { uri: "https://res.cloudinary.com/dh1irfap0/image/upload/v1724499901/footballfieldicon_n8mbgs.png" }}
+                        style={styles.image}
+                    />
+                    <View style={styles.cardContent}>
+                        <Text style={styles.fieldName}>{field.name}</Text>
+                        <Text style={styles.fieldNumber}>Loại sân: Sân {field.field_type}</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.cardTime}>
-                <FontAwesome name="clock-o" size={40} color="#000" style={styles.icon} />
-                <View style={styles.cardContent}>
-                    <Text style={styles.fieldName}>{format(new Date(date), 'dd/MM/yyyy')}</Text>
-                    <Text style={styles.fieldNumber}>{fromTime} - {toTime}</Text>
+                <View style={styles.cardTime}>
+                    <FontAwesome name="clock-o" size={40} color="#000" style={styles.icon} />
+                    <View style={styles.cardContent}>
+                        <Text style={styles.fieldName}>{format(new Date(date), 'dd/MM/yyyy')}</Text>
+                        <Text style={styles.fieldNumber}>{fromTime} - {toTime}</Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.label}>Họ và tên</Text>
-                <TextInput
-                    style={styles.input}
-                    value={name}
-                    onChangeText={setName}
-                />
-                <Text style={styles.label}>Số điện thoại</Text>
-                <TextInput
-                    style={styles.input}
-                    keyboardType="phone-pad"
-                    value={phone}
-                    onChangeText={setPhone}
-                />
-                <Text style={styles.label}>Ghi chú</Text>
-                <TextInput
-                    style={[styles.input, styles.notesInput]}
-                    multiline
-                    numberOfLines={4}
-                    value={notes}
-                    onChangeText={setNotes}
-                />
-            </View>
-            <View style={styles.totalPriceContainer}>
-                <Text style={styles.totalPriceText}>Tổng: {formatPrice(totalPrice)} VND</Text>
-            </View>
-            <TouchableOpacity
-                style={[styles.continueButton, isButtonDisabled && styles.disabledButton]}
-                onPress={handleSubmit}
-                disabled={isButtonDisabled}
-            >
-                <Text style={styles.continueButtonText}>ĐẶT SÂN</Text>
-            </TouchableOpacity>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Họ và tên</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={name}
+                        onChangeText={setName}
+                    />
+                    <Text style={styles.label}>Số điện thoại</Text>
+                    <TextInput
+                        style={styles.input}
+                        keyboardType="phone-pad"
+                        value={phone}
+                        onChangeText={setPhone}
+                    />
+                    <Text style={styles.label}>Ghi chú</Text>
+                    <TextInput
+                        style={[styles.input, styles.notesInput]}
+                        multiline
+                        numberOfLines={4}
+                        value={notes}
+                        onChangeText={setNotes}
+                    />
+                    
+                </View>
+                <View style={styles.totalPriceContainer}>
+                    <Text style={styles.totalPriceText}>Tổng: {formatPrice(totalPrice)} VND</Text>
+                </View>
+                <TouchableOpacity
+                    style={[styles.continueButton, isButtonDisabled && styles.disabledButton]}
+                    onPress={handleSubmit}
+                    disabled={isButtonDisabled}
+                >
+                    <Text style={styles.continueButtonText}>ĐẶT SÂN</Text>
+                </TouchableOpacity>
+            </ScrollView>
         </View>
     );
 };
@@ -100,6 +103,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#00C673',
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        paddingBottom: 20, // Add some space at the bottom
     },
     card: {
         flexDirection: 'row',

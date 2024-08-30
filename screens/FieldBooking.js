@@ -167,18 +167,27 @@ const FieldBooking = ({ route, navigation }) => {
     }
 
     // HH:mm
-    const lessThanNow = (timeObj) => {
+    const lessThanNow = (timeSlot) => {
         const now = new Date();
-        const [hours, minutes] = timeObj.time.split(':');
-        const timeToCheck = new Date();
-        timeToCheck.setHours(hours, minutes, 0, 0);
-        return timeToCheck < now
-    }
+    
+        // Lấy thông tin ngày tháng năm từ biến date
+        const year = date.getFullYear();
+        const month = date.getMonth(); // tháng từ 0 đến 11
+        const day = date.getDate();
+    
+        // Tách giờ phút từ timeObj
+        const [hours, minutes] = timeSlot.time.split(':');
+    
+        // Tạo đối tượng Date mới với ngày tháng năm và giờ phút từ timeObj
+        const timeToCheck = new Date(year, month, day, hours, minutes, 0, 0);
+
+        return timeToCheck < now;
+    };
 
     const updateTimeSlots = (bookings) => {
-        setTimeSlots((prevSlots) => {
+        setTimeSlots(() => {
             // Tạo một bản sao của slots gốc và reset lại trạng thái
-            const resetSlots = (prevSlots.length ? prevSlots : initTimeSlots()).map(slot => ({
+            const resetSlots = (initTimeSlots()).map(slot => ({
                 ...slot,
                 status: slot.status.toString().toLowerCase() === 'invalid' ? 'Invalid' : 'Available'
             }));
