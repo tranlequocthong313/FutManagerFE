@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Image, StyleSheet, Alert } fro
 import { FontAwesome } from '@expo/vector-icons';
 import { authHTTP, fieldEndpoints } from '../configs/apis'; // Ensure this import path is correct
 
-const Rating = ({ fieldId, onSuccess }) => {
+const Rating = ({ field, onSuccess }) => {
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
     const [isInputVisible, setIsInputVisible] = useState(false);
@@ -15,7 +15,7 @@ const Rating = ({ fieldId, onSuccess }) => {
         const checkIfReviewed = async () => {
             try {
                 const axiosInstance = await authHTTP();
-                const response = await axiosInstance.get(fieldEndpoints.reviews(fieldId));
+                const response = await axiosInstance.get(fieldEndpoints.reviews(field.id));
 
                 if (response.data.is_reviewed === true) {
                     setHasReviewed(true);
@@ -26,7 +26,7 @@ const Rating = ({ fieldId, onSuccess }) => {
         };
 
         checkIfReviewed();
-    }, [fieldId]);
+    }, [field]);
 
     const handleRating = (star) => {
         setRating(star);
@@ -50,7 +50,7 @@ const Rating = ({ fieldId, onSuccess }) => {
 
         try {
             const axiosInstance = await authHTTP();
-            const response = await axiosInstance.post(fieldEndpoints.reviews(fieldId), {
+            const response = await axiosInstance.post(fieldEndpoints.reviews(field.id), {
                 rating,
                 review: reviewText,
             });
@@ -77,12 +77,12 @@ const Rating = ({ fieldId, onSuccess }) => {
         <View style={styles.ratingContainer}>
             <View style={styles.fieldInfo}>
                 <Image
-                    source={{ uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804779/tycwpxoyw3mha6aoqqzd.jpg" }}
+                    source={field?.img ? { uri: field.img } : { uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804779/tycwpxoyw3mha6aoqqzd.jpg" }}
                     style={styles.fieldImage}
                 />
                 <View style={styles.fieldDetails}>
-                    <Text style={styles.fieldText}>Sân 1</Text>
-                    <Text style={styles.fieldText}>Loại sân: sân 5</Text>
+                    <Text style={styles.fieldText}>{field.name}</Text>
+                    <Text style={styles.fieldText}>Loại sân: sân {field.field_type}</Text>
                 </View>
             </View>
             {!hasReviewed && (

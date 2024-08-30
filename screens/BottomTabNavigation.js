@@ -5,6 +5,7 @@ import HomeScreen from "./HomeScreen";
 import AccountNavigation from "./AccountNavigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useNotification } from "../hooks/useNotification";
+import FieldNavigation from "./FieldNavigation";
 
 const ICONS = {
   Home: "calendar",
@@ -37,10 +38,10 @@ function BottomTabNavigation() {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={FieldNavigation}
         options={{
           tabBarLabel: "Trang chủ",
-          headerTitle: "Trang chủ",
+          headerShown: false, // Ẩn header
         }}
       />
       <Tab.Screen

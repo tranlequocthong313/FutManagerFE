@@ -13,7 +13,6 @@ const FloatingChatBubble = () => {
         const fetchCustomerSupports = async () => {
             try {
                 const res = await HTTP.get(serviceEndpoints.customerSupports)
-                console.log(res.data)
                 if (res.status === 200) {
                     setCustomerSupports(res.data.results)
                 } else {
@@ -41,13 +40,12 @@ const FloatingChatBubble = () => {
         let fieldMasterId = getServiceContent(["fb", "facebook"]) || "400753249778273";
 
         Linking.canOpenURL('https://').then(supported => {
-            console.log(supported)
             if (!supported) {
-                console.log('Can\'t handle url: ');
+                console.error('Can\'t handle url: ');
             } else {
                 Linking.openURL("https://m.me/" + fieldMasterId);
             }
-        }).catch(err => console.log(err))
+        }).catch(err => console.error(err))
     }
 
     const openZalo = () => {
@@ -55,11 +53,11 @@ const FloatingChatBubble = () => {
 
         Linking.canOpenURL('https://').then(supported => {
             if (!supported) {
-                console.log('Can\'t handle url: ');
+                console.error('Can\'t handle url: ');
             } else {
                 Linking.openURL("https://zalo.me/" + fieldMasterPhoneNumber);
             }
-        }).catch(err => console.log(err))
+        }).catch(err => console.error(err))
     }
 
     return (

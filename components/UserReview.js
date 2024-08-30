@@ -19,7 +19,7 @@ const UserReview = ({ rating = 0, reviewCount = 0, reviews = [] }) => {
 
     // Function to determine if "Show More" button should be displayed
     const shouldShowMoreButton = (text) => {
-        return text.split(' ').length > 5; 
+        return text.split(' ').length > 5;
     };
 
     return (
@@ -48,7 +48,7 @@ const UserReview = ({ rating = 0, reviewCount = 0, reviews = [] }) => {
                 <View key={review.id} style={styles.userReview}>
                     <Image
                         source={{
-                            uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804779/tycwpxoyw3mha6aoqqzd.jpg",
+                            uri: "https://res.cloudinary.com/diojasks1/image/upload/v1723804774/r04iqcz0m6lpmqlj7pp0.png",
                         }}
                         style={styles.userImage}
                     />
