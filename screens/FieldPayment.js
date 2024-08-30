@@ -23,6 +23,7 @@ const FieldPayment = () => {
     const handleBooking = async () => {
         if (selectedPayment) {
             const paymentChannel = selectedPayment.toLowerCase();
+            console.log(paymentChannel);
             const updatedBookingData = {
                 ...bookingData,
                 payment_channel: paymentChannel,
@@ -80,9 +81,9 @@ const FieldPayment = () => {
                 <View style={styles.cardPayment}>
                     <TouchableOpacity
                         style={styles.radioButton}
-                        onPress={() => handlePaymentSelect('VNPAY')}
+                        onPress={() => handlePaymentSelect('VN_PAY')}
                     >
-                        {selectedPayment === 'VNPAY' && <View style={styles.radioButtonIcon} />}
+                        {selectedPayment === 'VN_PAY' && <View style={styles.radioButtonIcon} />}
                     </TouchableOpacity>
                     <Image source={{ uri: 'https://res.cloudinary.com/dh1irfap0/image/upload/v1724575688/vnpay_jmd4sg.jpg' }} style={styles.paymentImage} />
                     <Text style={styles.paymentLabel}>VNPAY</Text>
