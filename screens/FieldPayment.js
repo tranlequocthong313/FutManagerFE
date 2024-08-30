@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { format } from 'date-fns';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -56,7 +56,7 @@ const FieldPayment = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.card}>
                 <Image
                     source={field.img ? { uri: field.img } : { uri: "https://res.cloudinary.com/dh1irfap0/image/upload/v1724499901/footballfieldicon_n8mbgs.png" }}
@@ -98,6 +98,7 @@ const FieldPayment = () => {
                     <Image source={{ uri: 'https://res.cloudinary.com/dh1irfap0/image/upload/v1724575681/momo_bvy6lz.png' }} style={styles.paymentImage} />
                     <Text style={styles.paymentLabel}>MOMO</Text>
                 </View>
+                
             </View>
 
             <View style={styles.footer}>
@@ -112,13 +113,13 @@ const FieldPayment = () => {
                     <Text style={styles.continueButtonText}>ĐẶT SÂN</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1, // Ensure ScrollView takes up the full height
         backgroundColor: '#00C673',
     },
     card: {
@@ -208,7 +209,6 @@ const styles = StyleSheet.create({
     },
     containerPayment: {
         marginVertical: 30,
-        flex: 1,
     },
     footer: {
         padding: 15,
