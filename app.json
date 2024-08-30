@@ -2,6 +2,7 @@
   "expo": {
     "name": "FutManagerFE",
     "slug": "FutManagerFE",
+    "scheme": "gatewaylistener",
     "version": "1.0.0",
     "extra": {
       "eas": {

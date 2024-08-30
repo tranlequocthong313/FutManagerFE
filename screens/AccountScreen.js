@@ -53,7 +53,6 @@ const AccountScreen = ({ navigation }) => {
                     <Icon name="map-marker" size={20} color="#fff" />
                     <Text style={styles.menuText}>Nhơn Đức, Nhà Bè, Hồ Chí Minh</Text>
                 </TouchableOpacity>
-
                 {user?.role === "admin" &&
                     <>
                         <Divider />
@@ -86,20 +85,14 @@ const AccountScreen = ({ navigation }) => {
                         </TouchableOpacity>
                     </>
                 }
-
                 <Divider />
 
-                <TouchableOpacity
-                    style={styles.menuItem}
-                    onPress={() => navigation.navigate("HelpScreen")}
-                >
+                <TouchableOpacity style={styles.menuItem}>
                     <Icon name="question-circle" size={20} color="#fff" />
                     <Text style={styles.menuText}>Trợ giúp</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.menuItem}
-                    onPress={() => navigation.navigate("AboutScreen")}
-                >
+                <TouchableOpacity style={styles.menuItem}>
                     <Icon name="info-circle" size={20} color="#fff" />
                     <Text style={styles.menuText}>Giới thiệu</Text>
                 </TouchableOpacity>
