@@ -23,7 +23,6 @@ const FieldPayment = () => {
     const handleBooking = async () => {
         if (selectedPayment) {
             const paymentChannel = selectedPayment.toLowerCase();
-            console.log(paymentChannel);
             const updatedBookingData = {
                 ...bookingData,
                 payment_channel: paymentChannel,

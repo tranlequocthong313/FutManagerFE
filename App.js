@@ -51,8 +51,8 @@ export default function App() {
 
     return (
         <SafeAreaProvider>
-            <NotificationProvider>
-                <UserProvider>
+            <UserProvider>
+                <NotificationProvider>
                     <NavigationContainer ref={navigationRef}>
                         <Stack.Navigator
                             initialRouteName={"BottomTabNavigation"}
@@ -78,8 +78,8 @@ export default function App() {
                         </Stack.Navigator>
                         <FloatingChatBubble />
                     </NavigationContainer>
-                </UserProvider>
-            </NotificationProvider>
+                </NotificationProvider>
+            </UserProvider>
         </SafeAreaProvider>
     );
 }

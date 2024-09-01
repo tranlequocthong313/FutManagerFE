@@ -45,7 +45,6 @@ const LoginScreen = ({ navigation }) => {
                 username: phoneNumber,
                 password,
             });
-            console.log(res);
             if (res.status === 200) {
                 await AsyncStorage.setItem(ACCESS_TOKEN_KEY, res.data.tokens.access);
                 await AsyncStorage.setItem(REFRESH_TOKEN_KEY, res.data.tokens.refresh);
